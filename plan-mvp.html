@@ -491,34 +491,6 @@
 
 <section>
   <div class="sec-head">
-    <h2>UI ở đâu ra — đừng dựng lại</h2>
-    <p>Giao diện không phải do nhóm tự vẽ. Bản thiết kế nằm sẵn trong <code>UI/</code>, do C tạo bằng Stitch rồi export ra. <code>index.html</code> và <code>interview.html</code> ở gốc repo là bản dựng thẳng từ đó — markup giữ nguyên, chỉ đổi tên DOM ID cho khớp hợp đồng.</p>
-  </div>
-
-  <div class="tbl-wrap">
-    <table>
-      <thead>
-        <tr><th>Trong <code>UI/</code> có gì</th><th>Dùng để làm gì</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><code>UI/Setup/code.html</code></td><td>Nguồn của <code>index.html</code>. Cần thêm ô nhập hay đổi chữ → sửa ở đây rồi báo C đồng bộ.</td></tr>
-        <tr><td><code>UI/Live Interview/code.html</code></td><td>Nguồn của <code>interview.html</code>. Mọi khối trên màn phỏng vấn đều từ file này.</td></tr>
-        <tr><td><code>UI/*/screen.png</code></td><td>Ảnh chụp màn hình — để đối chiếu khi không chắc mình dựng đúng chưa.</td></tr>
-        <tr><td><code>UI/*/DESIGN.md</code></td><td>Bản mô tả ý đồ thiết kế. <b>Đọc để hiểu ý, không đọc để copy số.</b></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="note">
-    <b>Một chỗ lệch, biết trước cho khỏi mất thời gian.</b>
-    Hai file <code>DESIGN.md</code> giống hệt nhau (Stitch export kèm vào cả hai thư mục), và phần chữ trong đó mô tả màu <code>#0D9488</code> / <code>#EA580C</code> cùng bố cục có khung video và buồng phiên dịch — <b>những thứ không tồn tại trong <code>code.html</code></b>.
-    Màu thật nằm trong <code>tailwind.config</code> của <code>code.html</code>: <code>primary #00685f</code>, <code>tertiary #a33900</code>. Bố cục thật là 5/7 giữa bảng HR và bảng ứng viên, không có ô video nào.
-    <b>Lấy <code>code.html</code> làm chuẩn.</b> Cần một màu hay một khoảng cách → mở <code>code.html</code> xem class Tailwind, đừng tra <code>DESIGN.md</code>.
-  </div>
-</section>
-
-<section>
-  <div class="sec-head">
     <h2>A · Người nói — chiều vào</h2>
     <p>Micro của HR → chữ → câu rút gọn → ảnh minh họa. Ba file, ba tính năng, không phụ thuộc B.</p>
   </div>
