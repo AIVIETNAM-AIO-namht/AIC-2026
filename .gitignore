@@ -1,0 +1,22 @@
+# Biến môi trường — KHÔNG BAO GIỜ commit
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel
+
+# Hệ điều hành / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Log
+*.log
+npm-debug.log*
+
+# Node (chỉ để chạy vercel dev)
+node_modules/
+outline.docx

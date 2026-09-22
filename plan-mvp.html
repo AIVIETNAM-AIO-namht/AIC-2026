@@ -1,0 +1,747 @@
+<title>EasyInterview MVP Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Atkinson+Hyperlegible+Next:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --surface-2: #F0FDFA;
+    --ink: #0F172A;
+    --ink-2: #475569;
+    --ink-3: #64748B;
+    --line: #E2E8F0;
+    --line-2: #CBD5E1;
+    --accent: #0F766E;
+    --accent-soft: #CCFBF1;
+    --code-bg: #0F172A;
+    --code-ink: #DCE6F2;
+    --code-dim: #7C93AD;
+
+    --a: #0D9488;  --a-soft: #CCFBF1;  --a-ink: #0F766E;
+    --b: #EA580C;  --b-soft: #FFEDD5;  --b-ink: #C2410C;
+    --c: #B45309;  --c-soft: #FEF3C7;  --c-ink: #92400E;
+
+    --radius: 0.5rem;
+    --radius-lg: 1rem;
+    --gutter: 1.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B1220;
+      --surface: #131C2E;
+      --surface-2: #10231F;
+      --ink: #E8EEF7;
+      --ink-2: #A6B4C8;
+      --ink-3: #7C8CA3;
+      --line: #22304A;
+      --line-2: #2E3F5C;
+      --accent: #5EEAD4;
+      --accent-soft: #0F2E2B;
+      --code-bg: #0A101C;
+      --code-ink: #DCE6F2;
+      --code-dim: #6E86A3;
+
+      --a: #5EEAD4;  --a-soft: #0F2E2B;  --a-ink: #99F6E4;
+      --b: #FB923C;  --b-soft: #331A0B;  --b-ink: #FDBA74;
+      --c: #FBBF24;  --c-soft: #2E2410;  --c-ink: #FCD34D;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0B1220;
+    --surface: #131C2E;
+    --surface-2: #10231F;
+    --ink: #E8EEF7;
+    --ink-2: #A6B4C8;
+    --ink-3: #7C8CA3;
+    --line: #22304A;
+    --line-2: #2E3F5C;
+    --accent: #5EEAD4;
+    --accent-soft: #0F2E2B;
+    --code-bg: #0A101C;
+    --code-ink: #DCE6F2;
+    --code-dim: #6E86A3;
+
+    --a: #5EEAD4;  --a-soft: #0F2E2B;  --a-ink: #99F6E4;
+    --b: #FB923C;  --b-soft: #331A0B;  --b-ink: #FDBA74;
+    --c: #FBBF24;  --c-soft: #2E2410;  --c-ink: #FCD34D;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Atkinson Hyperlegible Next", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding-inline: max(var(--gutter), 16px);
+    padding-block: 0 4rem;
+  }
+
+  .wrap { max-width: 1080px; margin-inline: auto; }
+
+  h1, h2, h3, h4, .eyebrow, .chip, .time, .person-role, th {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 1.2rem + 2.6vw, 2.9rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin: 0 0 0.75rem;
+    text-wrap: balance;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 0.4rem;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p { margin: 0; }
+
+  /* ---------- header ---------- */
+
+  header { padding-block: 3rem 2rem; }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.85rem;
+  }
+
+  .lead {
+    font-size: 1.08rem;
+    color: var(--ink-2);
+    max-width: 62ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .chip {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+
+  .chip strong { color: var(--ink); font-weight: 700; }
+
+  /* ---------- sections ---------- */
+
+  section { padding-block: 2rem; border-top: 1px solid var(--line); }
+
+  .sec-head { margin-bottom: 1.5rem; }
+  .sec-head p { color: var(--ink-2); max-width: 66ch; }
+
+  /* ---------- contract ---------- */
+
+  .contract {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 1.25rem;
+  }
+
+  .contract > div { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .contract h3 { display: flex; align-items: baseline; gap: 0.5rem; }
+  .contract h3 span {
+    font-family: "Atkinson Hyperlegible Next", monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.79rem;
+    line-height: 1.65;
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius);
+    margin: 0;
+    overflow-x: auto;
+    tab-size: 2;
+  }
+
+  pre .c { color: var(--code-dim); }
+  pre .k { color: #7DD3FC; }
+  pre .s { color: #FCD34D; }
+
+  /* ---------- timeline ---------- */
+
+  .timeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+
+  .tl {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 1.5rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .tl:first-child { border-top: none; padding-top: 0; }
+
+  .time {
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .time small {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 0.25rem;
+  }
+
+  .tl-body { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .tl-body > p { color: var(--ink-2); font-size: 0.95rem; max-width: 68ch; }
+
+  .tl ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .tl ul li {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: 0.94rem;
+    color: var(--ink-2);
+  }
+
+  .tl ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--line-2);
+  }
+
+  .tl ul li strong { color: var(--ink); font-weight: 700; }
+
+  .gate {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+    color: var(--ink-2);
+  }
+
+  .gate b {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  /* ---------- people ---------- */
+
+  .people {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1.25rem;
+  }
+
+  .person {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--p);
+    border-radius: var(--radius-lg);
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .person.p-a { --p: var(--a); --p-soft: var(--a-soft); --p-ink: var(--a-ink); }
+  .person.p-b { --p: var(--b); --p-soft: var(--b-soft); --p-ink: var(--b-ink); }
+  .person.p-c { --p: var(--c); --p-soft: var(--c-soft); --p-ink: var(--c-ink); }
+
+  .person-head { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .person-role {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    color: var(--p-ink);
+  }
+
+  .person-scope { font-size: 0.88rem; color: var(--ink-3); }
+
+  .feat {
+    display: inline-block;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: var(--p-soft);
+    color: var(--p-ink);
+    margin-right: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .files {
+    font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    color: var(--ink-3);
+    line-height: 1.9;
+    word-break: break-word;
+  }
+
+  .files b { color: var(--ink); font-weight: 600; }
+
+  .person h4 {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0 0 0.5rem;
+  }
+
+  .person ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .person ul li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: 0.9rem;
+    color: var(--ink-2);
+  }
+
+  .person ul li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--p);
+  }
+
+  /* ---------- table ---------- */
+
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+
+  table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 0.9rem; }
+
+  th {
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+
+  td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--line); color: var(--ink-2); vertical-align: top; }
+
+  tr:last-child td { border-bottom: none; }
+  td:first-child { color: var(--ink); font-weight: 600; }
+
+  /* ---------- dod ---------- */
+
+  .dod { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .dod li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.8rem 1rem;
+    font-size: 0.94rem;
+    color: var(--ink-2);
+  }
+
+  .dod { list-style: none; margin: 0; padding: 0; }
+
+  .dod li b {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+    padding-top: 0.12rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .note {
+    margin-top: 1.25rem;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--b);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: var(--surface);
+    padding: 1rem 1.15rem;
+    font-size: 0.92rem;
+    color: var(--ink-2);
+  }
+
+  .note b { color: var(--ink); }
+
+  @media (max-width: 560px) {
+    .tl { grid-template-columns: 1fr; gap: 0.6rem; }
+    .time small { display: inline; margin-left: 0.5rem; }
+    .time small::before { content: "· "; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  a { color: var(--accent); }
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Skeleton đã dựng · Chia việc tới từng hàm</div>
+  <h1>EasyInterview — ai làm gì, xong khi nào, kiểm tra bằng cách nào</h1>
+  <p class="lead">Khung code đã nằm trên đĩa. Mỗi người sở hữu file riêng, không ai sửa file của ai. Việc dưới đây chia tới từng hàm, mỗi việc có <b>một cách kiểm tra cụ thể</b> — không có việc nào "xong" chỉ vì đã viết code.</p>
+  <div class="chips">
+    <span class="chip"><strong>Mở bằng:</strong> <code>npx vercel dev</code></span>
+    <span class="chip"><strong>Không dùng:</strong> <code>file://</code></span>
+    <span class="chip"><strong>Trình duyệt:</strong> Chrome/Edge</span>
+    <span class="chip"><strong>Chặng 1 xong:</strong> 12:00</span>
+    <span class="chip"><strong>Nối dây:</strong> 13:00–14:00</span>
+  </div>
+</header>
+
+<section>
+  <div class="sec-head">
+    <h2>Khung đã có gì trên đĩa</h2>
+    <p>Mười ba file. Năm file C viết xong hoàn chỉnh, hai file khung, sáu file còn lại là vỏ rỗng có ghi sẵn chữ ký hàm và TODO — mở ra là biết phải viết gì.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>File</th><th>Chủ</th><th>Trạng thái</th><th>Việc còn lại</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>js/config.js</code></td><td>C</td><td>Xong</td><td>Không sửa. Muốn đổi hằng số thì báo C.</td></tr>
+        <tr><td><code>js/app.js</code></td><td>C</td><td>Xong</td><td>BUS + STATE. Muốn thêm sự kiện thì báo C.</td></tr>
+        <tr><td><code>js/ai.js</code></td><td>C</td><td>Xong</td><td>Timeout 8s + 1 lần thử lại. Đã có sẵn, A và B chỉ gọi.</td></tr>
+        <tr><td><code>api/claude.js</code></td><td>C</td><td>Xong</td><td>Proxy giữ key. Cắm env là chạy.</td></tr>
+        <tr><td><code>interview.html</code></td><td>C</td><td>Khung</td><td>Đủ DOM ID, chưa có hành vi. Chỉ C được sửa.</td></tr>
+        <tr><td><code>index.html</code></td><td>C</td><td>Khung</td><td>Form Setup đã lưu <code>sessionStorage</code> và chuyển trang.</td></tr>
+        <tr><td><code>js/stt.js</code></td><td>A</td><td>Vỏ rỗng</td><td>6 hàm TODO.</td></tr>
+        <tr><td><code>js/simplify.js</code></td><td>A</td><td>Vỏ rỗng</td><td>4 hàm TODO.</td></tr>
+        <tr><td><code>js/visual.js</code></td><td>A</td><td>Vỏ rỗng</td><td>3 hàm TODO + 12 ảnh.</td></tr>
+        <tr><td><code>js/cushion.js</code></td><td>B</td><td>Vỏ rỗng</td><td>4 hàm TODO.</td></tr>
+        <tr><td><code>js/voice.js</code></td><td>B</td><td>Vỏ rỗng</td><td>5 hàm TODO.</td></tr>
+        <tr><td><code>js/demo.js</code></td><td>C</td><td>Vỏ rỗng</td><td>Công tắc Demo — bảo hiểm của buổi trình bày.</td></tr>
+        <tr><td><code>vercel.json</code></td><td>C</td><td>Xong</td><td>Header bảo mật + quyền micro.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Ba luật, không thương lượng.</b>
+    <b>1.</b> Không ai mở file của người khác để sửa — kể cả sửa một chữ.
+    <b>2.</b> Cần thêm DOM ID → nhắn C, C thêm trong 2 phút.
+    <b>3.</b> Cần thêm sự kiện BUS → nhắn C. Không tự <code>emit</code> tên mới, vì tên mới thì không ai nghe.
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>UI ở đâu ra — đừng dựng lại</h2>
+    <p>Giao diện không phải do nhóm tự vẽ. Bản thiết kế nằm sẵn trong <code>UI/</code>, do C tạo bằng Stitch rồi export ra. <code>index.html</code> và <code>interview.html</code> ở gốc repo là bản dựng thẳng từ đó — markup giữ nguyên, chỉ đổi tên DOM ID cho khớp hợp đồng.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Trong <code>UI/</code> có gì</th><th>Dùng để làm gì</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>UI/Setup/code.html</code></td><td>Nguồn của <code>index.html</code>. Cần thêm ô nhập hay đổi chữ → sửa ở đây rồi báo C đồng bộ.</td></tr>
+        <tr><td><code>UI/Live Interview/code.html</code></td><td>Nguồn của <code>interview.html</code>. Mọi khối trên màn phỏng vấn đều từ file này.</td></tr>
+        <tr><td><code>UI/*/screen.png</code></td><td>Ảnh chụp màn hình — để đối chiếu khi không chắc mình dựng đúng chưa.</td></tr>
+        <tr><td><code>UI/*/DESIGN.md</code></td><td>Bản mô tả ý đồ thiết kế. <b>Đọc để hiểu ý, không đọc để copy số.</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Một chỗ lệch, biết trước cho khỏi mất thời gian.</b>
+    Hai file <code>DESIGN.md</code> giống hệt nhau (Stitch export kèm vào cả hai thư mục), và phần chữ trong đó mô tả màu <code>#0D9488</code> / <code>#EA580C</code> cùng bố cục có khung video và buồng phiên dịch — <b>những thứ không tồn tại trong <code>code.html</code></b>.
+    Màu thật nằm trong <code>tailwind.config</code> của <code>code.html</code>: <code>primary #00685f</code>, <code>tertiary #a33900</code>. Bố cục thật là 5/7 giữa bảng HR và bảng ứng viên, không có ô video nào.
+    <b>Lấy <code>code.html</code> làm chuẩn.</b> Cần một màu hay một khoảng cách → mở <code>code.html</code> xem class Tailwind, đừng tra <code>DESIGN.md</code>.
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>A · Người nói — chiều vào</h2>
+    <p>Micro của HR → chữ → câu rút gọn → ảnh minh họa. Ba file, ba tính năng, không phụ thuộc B.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Giờ</th><th>Việc cụ thể</th><th>File</th><th>Nghiệm thu — kiểm tra bằng cách nào</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>09:45<br><small>20 phút</small></td>
+          <td><b>Dựng recognition.</b> <code>const SR = window.SpeechRecognition || window.webkitSpeechRecognition</code>. Không có <code>SR</code> → bỏ <code>.hidden</code> ở <code>#browser-warning</code>, <code>emit('stt:error')</code>, dừng. Đặt <code>lang = CONFIG.LANG</code>, <code>continuous = true</code>, <code>interimResults = true</code>, <code>maxAlternatives = 1</code>.</td>
+          <td><code>js/stt.js</code></td>
+          <td>Nói "xin chào" vào mic → console in ra chữ. Mở bằng Firefox → thấy banner vàng cảnh báo, không có lỗi đỏ trong console.</td>
+        </tr>
+        <tr>
+          <td>10:05<br><small>30 phút</small></td>
+          <td><b>Vòng đời mic + cờ chống restart vô hạn.</b> Tách hai biến: <code>wantListening</code> (ý định của người dùng) và <code>recognition</code> (thực tế đang chạy). <code>onend</code> chỉ <code>start()</code> lại nếu <code>wantListening</code> còn <code>true</code>, hẹn <code>CONFIG.STT_RESTART_MS</code>. <code>onerror</code> gặp <code>'not-allowed'</code> → <code>wantListening = false</code> và báo lỗi. Gắn <code>#mic-btn</code>: đổi <code>aria-pressed</code>, đổi <code>#mic-label</code>, <code>emit('mic:toggle')</code>.</td>
+          <td><code>js/stt.js</code></td>
+          <td><b>Phép thử quan trọng nhất:</b> bật mic → im lặng 90 giây → nói tiếp. Chữ vẫn phải chạy. Rồi tắt mic, đợi 3 giây, xác nhận mic <b>không</b> tự bật lại. (Chrome tự ngắt sau ~60s im lặng — đây chính là chỗ hầu hết các demo chết.)</td>
+        </tr>
+        <tr>
+          <td>10:35<br><small>25 phút</small></td>
+          <td><b>Đổ chữ ra màn hình.</b> <code>onresult</code>: gom các result <code>isFinal === false</code> → <code>renderInterim()</code> ghi mờ. Result <code>isFinal</code> → <code>renderFinal()</code>: chốt thành dòng riêng, cuộn xuống đáy, <code>emit('transcript:final', { text })</code>. Dùng <code>textContent</code>, <b>tuyệt đối không <code>innerHTML</code></b> — chữ này do micro đọc vào, không phải dữ liệu tin được.</td>
+          <td><code>js/stt.js</code></td>
+          <td>Nói 3 câu liền. Mỗi câu chốt thành một dòng riêng, dòng cũ không bị ghi đè. Câu đang nói hiện mờ, câu xong hiện đậm.</td>
+        </tr>
+        <tr>
+          <td>11:00<br><small>20 phút</small></td>
+          <td><b>Vạch âm lượng.</b> <code>getUserMedia({audio:true})</code> → <code>AudioContext</code> → <code>AnalyserNode</code> → <code>requestAnimationFrame</code> đọc RMS → chuẩn hóa 0..1 → set <code>height</code> cho 12 vạch trong <code>#mic-level</code>. <span class="mono">ponytail:</span> phải xin một luồng mic riêng — Web Speech API không cho lấy stream của nó.</td>
+          <td><code>js/stt.js</code></td>
+          <td>Nói to → vạch nhảy. Im lặng → xẹp về 8%. Tắt mic → vạch đứng im.</td>
+        </tr>
+        <tr>
+          <td>11:20<br><small>40 phút</small></td>
+          <td><b>Gọi AI rút gọn.</b> <code>on('transcript:final')</code> → debounce <code>CONFIG.SIMPLIFY_DEBOUNCE_MS</code> → <code>simplify()</code>. Mỗi lần gọi mới thì huỷ request cũ. Gọi qua <code>askClaude()</code>, <b>không tự <code>fetch</code></b>. Ép cấu trúc bằng tool <code>rut_gon_cau_hoi</code> với <code>input_schema</code> gồm <code>question</code> (string), <code>keywords</code> (array, <code>minItems:3</code>, <code>maxItems:3</code>), <code>visual</code> (enum đúng 12 slug trong <code>CONFIG.VISUALS</code>), và <code>tool_choice: { type:'tool', name:'rut_gon_cau_hoi' }</code>. Đọc kết quả bằng <code>readToolInput()</code>. Trả <code>null</code> → dùng câu mẫu, <b>không để UI trống</b>.</td>
+          <td><code>js/simplify.js</code></td>
+          <td>Nói một câu 35 từ → sau ~1 giây hiện câu dưới 12 từ, badge đúng số từ, <b>đúng 3</b> chip. Rồi <b>rút dây mạng</b> và nói lại → sau 8 giây hiện câu mẫu kèm thông báo lỗi, giao diện không treo, không quay vòng vô hạn.</td>
+        </tr>
+        <tr>
+          <td>12:00<br><small>30 phút</small></td>
+          <td><b>Ảnh minh họa.</b> <code>on('question:simple')</code> → <code>clearTimeout</code> cũ → hẹn <code>CONFIG.VISUAL_DELAY_MS</code> → <code>showVisual(slug)</code>. Tra slug trong <code>CONFIG.VISUALS</code>; không khớp thì dùng <code>CONFIG.VISUAL_FALLBACK</code>. Gán <code>src</code> và <b><code>alt</code> bằng nhãn tiếng Việt</b> — ảnh này là nội dung, không phải trang trí, để <code>alt=""</code> là sai. <code>img.onerror</code> → quay về placeholder.</td>
+          <td><code>js/visual.js</code><br>+ <code>assets/visuals/</code></td>
+          <td>Hỏi câu về kho bãi → sau 5 giây ảnh hiện, <b>không</b> hiện ngay lập tức (đúng nhịp 4–6s của outline). Xoá tạm một file ảnh → placeholder hiện lại, không có icon ảnh vỡ. Hỏi câu lạ → rơi về ảnh <code>hop-nhom</code>.</td>
+        </tr>
+        <tr>
+          <td>trước 12:30<br><small>15 phút</small></td>
+          <td><b>12 ảnh.</b> Tải ảnh thật (Unsplash/Pexels, miễn phí, không cần ghi nguồn) đặt đúng 12 tên file trong <code>CONFIG.VISUALS</code>, nén còn ~1200px ngang. Ảnh phải là cảnh <b>công việc thật</b>, không phải icon minh họa — ứng viên khiếm thính dựa vào ảnh để hiểu ngữ cảnh.</td>
+          <td><code>assets/visuals/*.jpg</code></td>
+          <td><code>ls assets/visuals/</code> đủ 12 file, tên khớp <code>CONFIG.VISUALS</code> từng chữ một.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Bẫy của A:</b> Chrome tự ngắt recognition sau ~60 giây im lặng, và <code>onend</code> bắn ra <b>cả khi bạn chủ động tắt mic</b>. Nếu không tách <code>wantListening</code> ra khỏi trạng thái thật, mic sẽ tự bật lại sau khi ứng viên vừa tắt — nghe như phần mềm bị ma nhập, và đúng lúc đang demo.
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>B · Người trả lời — chiều ra</h2>
+    <p>Ứng viên → loa máy tính → tai HR. Hai file, hai tính năng. B sở hữu cả hai nên gọi chéo được trong cùng vùng.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Giờ</th><th>Việc cụ thể</th><th>File</th><th>Nghiệm thu — kiểm tra bằng cách nào</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>09:45<br><small>30 phút</small></td>
+          <td><b>Chọn giọng đọc.</b> <code>speechSynthesis.getVoices()</code> trả <b>mảng rỗng ở lần gọi đầu</b> — phải gán <code>speechSynthesis.onvoiceschanged</code> rồi chọn lại. Ưu tiên <code>lang === 'vi-VN'</code>, sau đó <code>startsWith('vi')</code>. Không tìm được giọng Việt → <b>đặt cờ và hiện cảnh báo ở <code>#voice-status</code></b>, không im lặng. <code>speak(text)</code>: <code>cancel()</code> trước rồi mới đọc; <code>onend</code> và <code>onerror</code> đều phải trả nút về trạng thái thường.</td>
+          <td><code>js/voice.js</code></td>
+          <td>Bấm "Đọc câu trả lời" khi ô nhập đã có chữ → nghe tiếng Việt. <b>Kiểm tra trên đúng máy sẽ demo trước 16:00</b> — giọng Việt trên Windows là "Microsoft An", máy khác có thể không có.</td>
+        </tr>
+        <tr>
+          <td>10:15<br><small>30 phút</small></td>
+          <td><b>Khoảng đệm 3 giây.</b> Bắt <code>keydown</code> ở <code>document</code>: nếu <code>e.code !== 'Space'</code> thì thôi; <b>nếu <code>e.target</code> là <code>input</code>, <code>textarea</code>, <code>select</code> hoặc <code>[contenteditable]</code> thì thôi</b> — không có chốt này thì ứng viên gõ dấu cách giữa câu là loa đọc "xin 3 giây" ngay giữa lúc đang trả lời. Đang đếm thì bỏ qua lần bấm sau. Đọc <code>CONFIG.CUSHION_LINE</code>, <code>emit('cushion:start', { seconds: CONFIG.CUSHION_SECONDS })</code>, đếm lùi ở <code>#cushion-countdown</code>.</td>
+          <td><code>js/cushion.js</code></td>
+          <td>Bấm Space → nghe câu xin 3 giây, đồng hồ chạy 3…2…1 rồi về "Sẵn sàng". <b>Gõ dấu cách trong ô nhập → không kích hoạt.</b> Bấm Space 5 lần liên tiếp → chỉ chạy một lần.</td>
+        </tr>
+        <tr>
+          <td>10:45<br><small>45 phút</small></td>
+          <td><b>Ghép câu + cho xem trước.</b> Ô nhập rỗng → báo "Bạn chưa gõ ý nào", <b>không gọi AI</b>. Có chữ → <code>askClaude()</code> với tool <code>ghep_cau_tra_loi</code> (<code>input_schema: { reply: string }</code>, <code>tool_choice: { type:'tool' }</code>), <code>system</code> là <code>CONFIG.PROMPTS.COMPOSE</code>. AI lỗi → <b>đọc nguyên văn những gì ứng viên gõ</b>, tuyệt đối không im lặng. Hiện câu đã ghép cho ứng viên đọc lại trước, rồi mới đọc to.</td>
+          <td><code>js/voice.js</code><br>+ nhờ C thêm <code>#reply-preview</code></td>
+          <td>Gõ "thiếu người → làm đơn gấp → báo trưởng nhóm" → hiện câu 2–3 câu, có xưng "em", gọi "anh/chị" → bấm đọc → nghe. Rút mạng → vẫn đọc được nguyên văn phần đã gõ.</td>
+        </tr>
+        <tr>
+          <td>11:30<br><small>30 phút</small></td>
+          <td><b>Trạng thái và huỷ.</b> Trong lúc chờ AI: nút chuyển "Đang ghép câu…" và không bấm được. Đang đọc: nút chuyển thành "Dừng" + icon stop, bấm lần nữa là <code>cancel()</code>. Ghép xong → <code>emit('reply:ready', { text })</code>. <b>Không bao giờ để nút bấm mà không có phản hồi gì.</b></td>
+          <td><code>js/voice.js</code></td>
+          <td>Bấm đọc rồi bấm dừng → im ngay lập tức. Trong lúc chờ AI, nhìn vào nút là biết máy đang chạy chứ không phải đơ.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Việc duy nhất B phải nhờ C:</b> cần một chỗ để hiện câu đã ghép cho ứng viên xem trước. <code>#voice-status</code> chỉ là một dòng chữ nhỏ, không đủ. <b>Nhắn C thêm <code>&lt;p id="reply-preview"&gt;</code> dưới ô nhập — trước 11:00.</b> Đây là va chạm duy nhất giữa B và C trong cả ngày; mọi thứ khác B tự làm trong file của mình.
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>C · Đường ống</h2>
+    <p>Hạ tầng, tích hợp, deploy — và là người duy nhất được sửa <code>interview.html</code>. Không làm việc riêng trong khung 13:00–14:00.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Giờ</th><th>Việc cụ thể</th><th>File</th><th>Nghiệm thu — kiểm tra bằng cách nào</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>09:45<br><small>15 phút</small></td>
+          <td><b>Xác nhận khung chạy.</b> <code>npx vercel dev</code>, mở <code>http://localhost:3000/index.html</code>. <b>Không mở bằng <code>file://</code></b> — proxy và <code>getUserMedia</code> đều không chạy. Kiểm tra đủ DOM ID.</td>
+          <td><code>index.html</code><br><code>interview.html</code></td>
+          <td>Dán vào console: <code>['mic-btn','mic-level','transcript-stream','latency-badge','simple-question','word-count-badge','keyword-chips','visual-anchor','cushion-btn','cushion-countdown','reply-input','voice-proxy-btn','voice-status','demo-toggle','browser-warning'].filter(id =&gt; !document.getElementById(id))</code> → phải trả về mảng rỗng.</td>
+        </tr>
+        <tr>
+          <td>10:00<br><small>30 phút</small></td>
+          <td><b>Cắm key và chạy proxy thật.</b> Copy <code>.env.example</code> thành <code>.env</code>, dán key. <code>npx vercel dev</code>. Gọi thử proxy từ console bằng một message ngắn. <b>Nếu key này từng nằm trong file nào đã push lên repo công khai thì thu hồi và tạo key mới</b> — repo đang public.</td>
+          <td><code>.env</code><br><code>api/claude.js</code></td>
+          <td>Gọi đúng → nhận JSON có <code>content</code>. Gọi với <code>model</code> sai → 400 <code>model_not_allowed</code>. Không truyền key → 500 <code>server_misconfigured</code> và <b>không</b> lộ chi tiết nội bộ trong body trả về.</td>
+        </tr>
+        <tr>
+          <td>10:30<br><small>30 phút</small></td>
+          <td><b>Kiểm chứng <code>askClaude()</code>.</b> Viết tạm một hàm <code>window.__testAI()</code> trong console gọi <code>askClaude()</code> một lần. Rồi rút mạng, gọi lại. Xác nhận timeout và thử lại hoạt động.</td>
+          <td><code>js/ai.js</code></td>
+          <td>Có mạng → trả object. Rút mạng → trả <code>null</code> sau khoảng 8–16 giây, có <code>ai:error</code> phát ra, <b>không treo vô hạn</b>.</td>
+        </tr>
+        <tr>
+          <td>11:00<br><small>15 phút</small></td>
+          <td><b>Thêm <code>#reply-preview</code></b> theo yêu cầu của B: một <code>&lt;p&gt;</code> dưới ô nhập, chữ lớn hơn <code>#voice-status</code>, có <code>aria-live="polite"</code>. Cập nhật luôn danh sách ID đã freeze.</td>
+          <td><code>interview.html</code></td>
+          <td>B xác nhận đã có chỗ hiện câu xem trước và tự đổ được chữ vào đó.</td>
+        </tr>
+        <tr>
+          <td>11:30<br><small>30 phút</small></td>
+          <td><b>Công tắc Demo.</b> <code>js/demo.js</code>: một kịch bản phỏng vấn dựng sẵn, chạy qua <b>đúng BUS</b> — chỉ <code>emit('transcript:final')</code> rồi để <code>simplify.js</code> tự chạy tiếp. <b>Không hardcode kết quả AI.</b> Bật thì tắt micro.</td>
+          <td><code>js/demo.js</code></td>
+          <td>Bật công tắc, không cần micro, cả 5 tính năng vẫn chạy hết lượt. Tắt công tắc → về trạng thái thường, không còn timer nào chạy ngầm.</td>
+        </tr>
+        <tr>
+          <td>12:00<br><small>30 phút</small></td>
+          <td><b>Deploy.</b> <code>vercel</code>, đặt <code>ANTHROPIC_API_KEY</code> trong Environment Variables của dashboard. Lấy URL công khai.</td>
+          <td>Vercel</td>
+          <td>Mở URL công khai bằng Chrome trên <b>một máy khác</b>, bấm mic → chữ chạy. Đây là phép thử thật: máy khác, mạng khác, quyền mic khác.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>13:00–14:00 · Nối dây</h2>
+    <p>Chặng rủi ro nhất trong ngày. Ba module gặp nhau lần đầu. C ngồi cùng suốt khung này, không làm việc riêng — va chạm phải gỡ ngay, không để tồn.</p>
+  </div>
+
+  <ol class="timeline">
+    <li class="tl">
+      <div class="time">Bước 1<small>10 phút</small></div>
+      <div class="tl-body">
+        <h3>Cắm A trước — đường vào</h3>
+        <p>Bật mic, nói một câu dài. Kiểm tra theo đúng thứ tự dây: <code>transcript:final</code> có bắn không → <code>simplify.js</code> có nhận không → <code>question:simple</code> có bắn không → ảnh có hiện sau 5 giây không. <b>Đứt ở đâu sửa ở đó</b>, không nhảy bước.</p>
+        <div class="gate"><b>Cổng</b><span>Nói một câu 35 từ → màn hình ứng viên hiện câu rút gọn + 3 chip + ảnh. Không ai chạm bàn phím ngoài việc nói.</span></div>
+      </div>
+    </li>
+    <li class="tl">
+      <div class="time">Bước 2<small>15 phút</small></div>
+      <div class="tl-body">
+        <h3>Cắm B — đường ra</h3>
+        <p>B độc lập với A nên phần này thường trôi. Bấm Space khi con trỏ đang ở ngoài ô nhập; gõ ý chính; xem câu AI ghép; bấm đọc.</p>
+        <div class="gate"><b>Cổng</b><span>Nghe được câu xin 3 giây, rồi nghe được câu trả lời hoàn chỉnh do AI ghép.</span></div>
+      </div>
+    </li>
+    <li class="tl">
+      <div class="time">Bước 3<small>35 phút</small></div>
+      <div class="tl-body">
+        <h3>Chạy trọn một lượt phỏng vấn giả</h3>
+        <p>Hai người đóng vai. Một người là HR hỏi 4–5 câu thật, một người là ứng viên chỉ dùng bàn phím và phím Space. Người thứ ba bấm giờ và ghi lại <b>mọi chỗ đứt</b> — kể cả chỗ chỉ khựng nửa giây.</p>
+        <div class="gate"><b>Cổng</b><span>Chạy trọn 5 phút, không crash, và <b>không có khoảnh khắc nào màn hình đứng im quá 1 giây mà không báo gì</b>. Ứng viên khiếm thính nhìn vào khoảng trắng đó và mất niềm tin vào cả sản phẩm.</span></div>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Ai chịu trách nhiệm dòng nào</h2>
+    <p>Sáu dòng dưới đây phải đúng <b>cùng lúc</b>, trên URL công khai, trong Chrome. Cột cuối là người phải đứng ra chịu trận nếu dòng đó sai lúc demo.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Hành vi nhìn thấy được</th><th>Chịu trách nhiệm</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>01</td><td>HR nói câu 30–40 từ → chữ chạy trên màn hình trong dưới 1 giây.</td><td>A</td></tr>
+        <tr><td>02</td><td>Câu đó tự rút còn dưới 12 từ, kèm badge đếm số từ và đúng 3 chip từ khóa.</td><td>A</td></tr>
+        <tr><td>03</td><td>Sau 4–6 giây, ảnh minh họa ngữ cảnh hiện ra dưới câu hỏi.</td><td>A</td></tr>
+        <tr><td>04</td><td>Ứng viên bấm Space → loa phát câu xin 3 giây → đồng hồ đếm lùi chạy → HR không còn nghe khoảng lặng.</td><td>B</td></tr>
+        <tr><td>05</td><td>Ứng viên gõ 3 cụm từ → AI ghép thành câu công sở → ứng viên duyệt → loa đọc cho HR nghe.</td><td>B</td></tr>
+        <tr><td>06</td><td>Rút mạng, sản phẩm vẫn không sập — mọi lỗi đều có thông báo nhìn thấy được.</td><td>C</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>Đường lui đã cài sẵn trong khung — đừng tháo ra.</b>
+    Micro hỏng → công tắc Demo. AI lỗi → câu mẫu. Không có giọng tiếng Việt → hiện chữ to thay vì đọc. Ảnh thiếu → placeholder. Không có đường lui nào là "code cho vui" — mỗi cái là một cách demo chết được gỡ bỏ.
+  </div>
+
+  <div class="note">
+    <b>Còn dư thời gian thì làm gì:</b> đo số thật rồi hiện lên màn hình — độ trễ STT, độ trễ AI, số từ trước và sau khi rút gọn. Outline đưa ra các con số "giảm 80% độ trễ nhận thức" và "tiết kiệm 100% chi phí phiên dịch"; đo được con số thật từ chính sản phẩm mình thì phần trình bày mạnh hơn hẳn so với đọc lại slide. <b>Đừng bịa số</b> — ban giám khảo sẽ hỏi cách đo.
+  </div>
+</section>
+
+</div>
