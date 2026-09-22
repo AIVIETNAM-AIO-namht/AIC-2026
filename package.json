@@ -1,0 +1,11 @@
+{
+  "name": "easyinterview",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "EasyInterview — trợ lý phỏng vấn cho ứng viên Điếc / khiếm thính",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  }
+}

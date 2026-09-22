@@ -15,6 +15,10 @@
 <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
         Trực tiếp: Vòng Phỏng Vấn Kho Vận • Mã: VH-829
       </span>
+<span class="hidden md:inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary">person</span>
+<span id="candidate-name">Ứng viên</span>
+</span>
 <span class="hidden lg:inline-flex items-center gap-1 text-on-surface-variant font-body-sm text-body-sm">
 <span class="material-symbols-outlined text-[18px] text-primary">assist_walker</span>
         Chế độ Hỗ trợ Khiếm thính / Hard-of-Hearing (DHH)
@@ -52,8 +56,8 @@
 </div>
 <span class="px-3 py-1 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm flex items-center gap-1.5 shrink-0 shadow-sm">
 <span class="w-2 h-2 rounded-full bg-on-primary-container animate-pulse"></span>
-            Đang ghi âm &amp; lắng nghe
-          </span>
+<span id="rec-status">Micro đang tắt</span>
+</span>
 </div>
 <!-- Audio Control Module -->
 <div class="p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-sm shadow-sm relative overflow-hidden">
@@ -69,8 +73,8 @@
 </div>
 <!-- Decibel Visual Meter Badge -->
 <div class="px-3 py-1.5 rounded-lg bg-surface-container-highest text-primary font-label-sm text-label-sm flex items-center gap-1.5">
-<span class="material-symbols-outlined text-[16px] animate-bounce">volume_up</span>
-<span>-18 dB • Chuẩn</span>
+<span class="material-symbols-outlined text-[16px]">volume_up</span>
+<span id="mic-db">— dB • Chờ tín hiệu</span>
 </div>
 </div>
 <!-- Animated Sound Waveform Bars -->
@@ -96,21 +100,20 @@
 <span class="material-symbols-outlined text-[18px] text-primary">hearing</span>
               Bản ghi âm lời nói trực tiếp (Live Speech Transcript)
             </span>
-<span class="font-label-sm text-label-sm text-outline font-mono">10:24:18 AM</span>
+<span class="font-label-sm text-label-sm text-outline font-mono" id="transcript-clock">--:--:--</span>
 </div>
 <!-- Spoken question content in small legible text -->
-<div class="p-space-sm rounded-lg bg-surface-container-lowest text-on-surface-variant font-body-sm text-body-sm leading-relaxed shadow-inner" id="transcript-stream" aria-live="polite" aria-label="Bản ghi lời nói trực tiếp">
+<div class="p-space-sm rounded-lg bg-surface-container-lowest text-on-surface-variant font-body-sm text-body-sm leading-relaxed shadow-inner max-h-48 overflow-y-auto" id="transcript-stream" aria-live="polite" aria-label="Bản ghi lời nói trực tiếp">
 <span class="font-label-sm text-label-sm text-primary font-bold block mb-1">HR vừa nói:</span>
-            <span id="transcript-body" class="block"></span>
-            “Trước đây khi làm việc trong kho, nếu gặp tình huống ca làm bị thiếu nhân sự đột xuất do có người nghỉ ốm, bạn thường chủ động xử lý thế nào để không chậm tiến độ giao hàng?”
-          </div>
+<span id="transcript-body" class="block"></span>
+</div>
 <!-- AI Transformation Metrics & Simplification Badge -->
 <div class="p-space-sm rounded-lg bg-secondary-container text-on-secondary-container flex items-start gap-2 shadow-sm">
 <span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">auto_awesome</span>
 <div class="flex flex-col">
 <span class="font-label-sm text-label-sm font-bold">Đã tinh gọn câu hỏi cho ứng viên</span>
-<p class="font-body-sm text-body-sm text-on-secondary-container leading-tight">
-                Giảm <strong class="font-bold">72%</strong> độ dài câu (từ 36 từ xuống 7 từ) • Trích xuất 3 từ khóa cốt lõi để loại bỏ nhiễu ngữ nghĩa cho DHH.
+<p class="font-body-sm text-body-sm text-on-secondary-container leading-tight" id="reduction-note" aria-live="polite">
+                Chưa có câu hỏi nào. Số liệu rút gọn sẽ hiện ngay sau câu đầu tiên.
               </p>
 </div>
 </div>
@@ -119,7 +122,7 @@
 <div class="flex flex-col gap-space-xs pt-space-xs">
 <span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Thao tác nhanh cho người phỏng vấn</span>
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-<button class="px-3 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm" type="button">
+<button class="px-3 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed" id="hr-repeat-btn" type="button">
 <span class="material-symbols-outlined text-[18px] text-primary">replay</span>
               Lặp lại câu hỏi
             </button>
@@ -127,7 +130,7 @@
 <span class="material-symbols-outlined text-[18px] text-secondary">edit_note</span>
               Thêm ghi chú
             </button>
-<button class="px-3 py-2.5 rounded-lg bg-primary-container text-on-primary-container hover:bg-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1.5 transition-colors shadow-sm" type="button">
+<button class="px-3 py-2.5 rounded-lg bg-primary-container text-on-primary-container hover:bg-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1.5 transition-colors shadow-sm" id="hr-next-btn" type="button">
 <span class="material-symbols-outlined text-[18px]">skip_next</span>
               Câu tiếp theo
             </button>
@@ -184,47 +187,10 @@
             </span>
 <span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-semibold" id="word-count-badge">— / 12 từ</span>
 </div>
-<p class="font-headline-lg text-headline-lg md:text-[34px] md:leading-[44px] text-on-surface font-extrabold tracking-tight" id="simple-question" aria-live="polite">Đang nghe câu hỏi…</p>
+<p class="font-headline-lg text-headline-lg md:text-[34px] md:leading-[44px] text-on-surface font-extrabold tracking-tight rounded-lg -mx-2 px-2 transition-colors duration-300" id="simple-question" aria-live="polite">Đang nghe câu hỏi…</p>
 <!-- 3 Highlighted Keyword Chips in Soft Teal & Distinct Rounded Styling -->
 <div class="flex flex-wrap items-center gap-space-sm pt-space-xs" id="keyword-chips" aria-live="polite" aria-label="Từ khóa trọng tâm">
 <span class="font-label-sm text-label-sm text-on-surface-variant font-semibold">Từ khóa trọng tâm:</span>
-<span class="px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md font-bold shadow-sm flex items-center gap-1.5 hover:bg-secondary-fixed transition-colors">
-<span class="material-symbols-outlined text-[18px]">group_off</span>
-              thiếu người
-            </span>
-<span class="px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md font-bold shadow-sm flex items-center gap-1.5 hover:bg-secondary-fixed transition-colors">
-<span class="material-symbols-outlined text-[18px]">bolt</span>
-              xử lý gấp
-            </span>
-<span class="px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md font-bold shadow-sm flex items-center gap-1.5 hover:bg-secondary-fixed transition-colors">
-<span class="material-symbols-outlined text-[18px]">flag</span>
-              báo cáo
-            </span>
-</div>
-</div>
-<!-- Visual Context Card: Warehouse Illustration -->
-<div class="p-space-md rounded-xl bg-surface-container-low shadow-sm flex flex-col gap-space-sm">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-[20px]">image</span>
-<span class="font-label-md text-label-md text-on-surface font-semibold">Ngữ cảnh trực quan (Visual Context)</span>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Minh họa thực tế công việc</span>
-</div>
-<!-- Flat 2D Warehouse Illustration -->
-<div class="w-full overflow-hidden rounded-xl bg-surface-container shadow-inner">
-<img alt="" class="w-full h-48 md:h-56 object-cover object-center hidden" id="visual-anchor"/>
-<div class="w-full h-48 md:h-56 flex flex-col items-center justify-center gap-2 text-on-surface-variant" id="visual-placeholder">
-<span class="material-symbols-outlined text-[40px]">image</span>
-<span class="font-body-sm text-body-sm">Hình minh họa sẽ hiện khi câu hỏi rõ ngữ cảnh</span>
-</div>
-</div>
-<div class="flex items-center justify-between pt-1">
-<p class="font-body-sm text-body-sm text-on-surface font-semibold flex items-center gap-1.5">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
-              Tình huống: Điều phối hàng hóa trong kho vận khi thiếu cộng sự
-            </p>
-<span class="font-label-sm text-label-sm text-on-surface-variant hidden sm:inline">Phân loại: Tình huống kho bãi</span>
 </div>
 </div>
 <!-- Candidate Response & Voice Proxy Synthesizer Module -->
@@ -238,8 +204,10 @@
 </div>
 <!-- Quick keyword / text input -->
 <div class="relative w-full">
-<textarea class="w-full p-space-sm rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-inner focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-outline resize-none" id="reply-input" aria-label="Phản hồi của bạn" placeholder="Nhập câu trả lời hoặc chọn từ gợi ý bên dưới..." rows="2">Ưu tiên đơn gấp -&gt; Gọi hỗ trợ ca khác -&gt; Báo trưởng nhóm</textarea>
+<textarea class="w-full p-space-sm rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-inner focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-outline resize-none" id="reply-input" aria-label="Phản hồi của bạn" placeholder="Nhập câu trả lời hoặc chọn từ gợi ý bên dưới..." rows="2"></textarea>
 </div>
+<!-- Câu AI đã ghép — ứng viên duyệt trước khi loa đọc cho HR nghe -->
+<p class="hidden p-space-sm rounded-lg bg-secondary-container text-on-secondary-container font-body-lg text-body-lg leading-relaxed shadow-sm" id="reply-preview" aria-live="polite" aria-label="Câu trả lời AI đã ghép"></p>
 <!-- Quick Candidate Keyword Chips to Insert -->
 <div class="flex flex-wrap items-center gap-2">
 <span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Gợi ý nhanh:</span>
@@ -295,9 +263,9 @@
 <script src="js/ai.js"></script>
 <script src="js/stt.js"></script>
 <script src="js/simplify.js"></script>
-<script src="js/visual.js"></script>
 <script src="js/cushion.js"></script>
 <script src="js/voice.js"></script>
+<script src="js/hr-actions.js"></script>
 <script src="js/demo.js"></script>
 </body>
 </html>

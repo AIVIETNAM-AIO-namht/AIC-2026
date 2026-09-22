@@ -255,35 +255,7 @@
 </div>
 </div>
 </div>
-<script>
-  function testDeviceSetup() {
-    const toast = document.getElementById('toastNotification');
-    if (!toast) return;
-    toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-    toast.classList.add('translate-y-0', 'opacity-100');
-    setTimeout(() => {
-      toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-      toast.classList.remove('translate-y-0', 'opacity-100');
-    }, 4000);
-  }
-
-  function startInterview() {
-    const candidateName = document.getElementById('candidateName').value;
-    const btn = document.querySelector('#setupForm button[type="submit"]');
-    if (btn) {
-      btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span><span>Đang khởi tạo phòng phỏng vấn...</span>';
-      btn.disabled = true;
-    }
-    setTimeout(() => {
-      const toast = document.getElementById('toastNotification');
-      if (toast) {
-        toast.innerHTML = '<span class="material-symbols-outlined text-tertiary-container text-[22px]">rocket_launch</span><div><p class="font-label-sm text-label-sm font-bold">Bắt đầu phiên cho ' + candidateName + '</p><p class="font-body-sm text-body-sm text-on-surface-variant">Đang chuyển tiếp sang màn hình Live Interview Copilot...</p></div>';
-        toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-        toast.classList.add('translate-y-0', 'opacity-100');
-      }
-    }, 1000);
-  }
-</script></main><footer class="w-full bg-surface-container-low py-space-lg"><div class="w-full px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[20px]">verified_user</span><p class="font-body-sm text-body-sm text-on-surface-variant">EasyInterview Assistive AI • Certified WCAG 2.2 AAA Real-Time Captioning Architecture</p></div><div class="flex items-center gap-space-lg"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" data-path="accessibility-statement" href="#">Accessibility Statement</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" data-path="privacy-compliance" href="#">DHH Confidentiality</a><span class="font-body-sm text-body-sm text-on-surface-variant">© 2025 EasyInterview</span></div></div></footer><script>
+</main><footer class="w-full bg-surface-container-low py-space-lg"><div class="w-full px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-center md:text-left"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[20px]">verified_user</span><p class="font-body-sm text-body-sm text-on-surface-variant">EasyInterview Assistive AI • Certified WCAG 2.2 AAA Real-Time Captioning Architecture</p></div><div class="flex items-center gap-space-lg"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" data-path="accessibility-statement" href="#">Accessibility Statement</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" data-path="privacy-compliance" href="#">DHH Confidentiality</a><span class="font-body-sm text-body-sm text-on-surface-variant">© 2025 EasyInterview</span></div></div></footer><script>
   // ponytail: 1 file, không cần js/*.js. Trang này chỉ gom lựa chọn rồi đẩy sang interview.html.
   const SESSION_KEY = 'ei.session';
 
@@ -295,15 +267,22 @@
     };
   }
 
+  // Toast được dựng sẵn ở trạng thái ẩn bằng translate-y-20 + opacity-0,
+  // nên phải gỡ đúng hai class đó — thêm/bớt 'hidden' không làm nó hiện ra.
   function showToast(message, isError) {
     const el = document.getElementById('toastNotification');
+    if (!el) return;
     const text = el.querySelector('span:last-child') || el;
     text.textContent = message;
-    el.classList.remove('hidden');
+    el.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+    el.classList.add('translate-y-0', 'opacity-100');
     el.classList.toggle('bg-error-container', !!isError);
     el.classList.toggle('text-on-error-container', !!isError);
     clearTimeout(showToast._t);
-    showToast._t = setTimeout(function () { el.classList.add('hidden'); }, 4000);
+    showToast._t = setTimeout(function () {
+      el.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      el.classList.remove('translate-y-0', 'opacity-100');
+    }, 4000);
   }
 
   function startInterview() {
@@ -319,7 +298,19 @@
     } catch (e) {
       showToast('Không lưu được phiên (trình duyệt chặn bộ nhớ tạm). Vẫn vào phỏng vấn được.', true);
     }
-    window.location.href = 'interview.html';
+
+    const btn = document.querySelector('#setupForm button[type="submit"]');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = '';
+      const icon = document.createElement('span');
+      icon.className = 'material-symbols-outlined animate-spin text-[20px]';
+      icon.textContent = 'progress_activity';
+      btn.appendChild(icon);
+      btn.appendChild(document.createTextNode('Đang khởi tạo phòng phỏng vấn…'));
+    }
+
+    setTimeout(function () { window.location.href = 'interview.html'; }, 400);
   }
 
   // ponytail: chỉ xin quyền + xác nhận có thiết bị. Không đo chất lượng, không lưu gì.

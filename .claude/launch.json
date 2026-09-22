@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev-python",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["dev-server.py", "3000"],
+      "port": 3000
+    },
+    {
+      "name": "dev-vercel",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["vercel", "dev", "--listen", "3001"],
+      "port": 3001
+    }
+  ]
+}
